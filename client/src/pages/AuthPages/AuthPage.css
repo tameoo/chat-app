@@ -1,0 +1,33 @@
+.container {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.form {
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color: #3c52b3 !important;
+    color: #fff !important;
+}
+
+.center {
+    text-align: center !important;
+}
+
+.mb-form {
+    margin-bottom: 8px !important;
+}
+
+.link {
+    text-decoration: none;
+    color: #3c52b3;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
