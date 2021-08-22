@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-
+import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { MainPage } from "./pages";
+import { useSelector } from "react-redux";
+
+import { MainPage } from "./pages/MainPage";
 import { SignIn, SignUp } from "./pages/AuthPages";
 
-function App(props) {
-  const [isAuthorized, setAuthorized] = useState(false);
+const App = () => {
+  const userID = useSelector((state) => state.userAuth.userID);
 
-  // useEffect(() => {
-  //   io("http://localhost:8000", {
-  //     transports: ["websocket", "polling", "flashsocket"],
-  //   });
-  // }, []);
-
-  if (isAuthorized) {
+  if (userID) {
     return (
       <Switch>
         <Route path="/main" exact>
@@ -36,6 +30,6 @@ function App(props) {
       <Redirect to="/sign-in" />
     </Switch>
   );
-}
+};
 
-export default App;
+export { App };

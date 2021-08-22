@@ -1,22 +1,60 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+
+import { setUserID } from "../../redux";
+import { useDispatch } from "react-redux";
+
+import { TextField, Button } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+
 import { isEmail } from "validator";
+import { Spinner } from "../../components/Spinner/Spinner";
 import "./AuthPage.css";
 
 const SignIn = () => {
   const [isLoading, setLoading] = useState(false);
+  const [isResponseError, setResponseError] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { email, password } = e.target;
+
+    const authData = {
+      email: email.value,
+      password: password.value,
+    };
 
     if (!emailError && !passwordError) {
       setLoading(true);
-      console.log("success");
-      //fetch
-      setLoading(false);
+
+      fetch("http://localhost:8000/user/sign-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(authData),
+      })
+        .then((data) => data.json())
+        .then((response) => {
+          setLoading(false);
+
+          if (response.token) {
+            localStorage.setItem("user", response.token);
+            dispatch(setUserID(response.result._id));
+          }
+
+          if (response.message) {
+            setResponseError(response.message);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
     }
   };
 
@@ -63,13 +101,18 @@ const SignIn = () => {
           helperText={passwordError && "Password can be 8 or more character"}
           required
         />
+        {isResponseError && (
+          <Alert className="mb-form" variant="filled" severity="error">
+            {isResponseError}
+          </Alert>
+        )}
         <Button
           disabled={isLoading}
           className={`${isLoading ? "" : "btn"} mb-form`}
           type="submit"
           variant="contained"
         >
-          Submit
+          {isLoading ? <Spinner /> : "Submit"}
         </Button>
         <Link to="/sign-up" className="link center mb-form">
           Create an account? Sign up now.

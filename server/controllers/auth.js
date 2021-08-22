@@ -4,7 +4,7 @@ import { User } from "../models/user.js";
 
 const signInController = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+
   try {
     const existsUser = await User.findOne({ email });
 
@@ -26,13 +26,13 @@ const signInController = async (req, res) => {
 
     return res.status(200).json({ result: existsUser, token });
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error try again later" });
   }
 };
 
 const signUpController = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name, email, password);
+
   try {
     const existsUser = await User.findOne({ email });
 
@@ -41,7 +41,7 @@ const signUpController = async (req, res) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 12);
-    console.log(hashPassword);
+
     const createdUser = await User.create({
       name,
       email,
@@ -56,7 +56,7 @@ const signUpController = async (req, res) => {
 
     return res.status(200).json({ result: createdUser, token });
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error try again later" });
   }
 };
 

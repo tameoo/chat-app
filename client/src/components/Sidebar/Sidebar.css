@@ -1,0 +1,8 @@
+.boxshadow-none {
+  box-shadow: none !important;
+}
+
+.sidebar-toolbar {
+  gap: 20px;
+  padding: 0 18px !important;
+}
