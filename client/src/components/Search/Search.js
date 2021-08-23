@@ -14,7 +14,27 @@ const Search = () => {
         id="outlined-basic"
         label="Outlined"
         variant="outlined"
-      />
+      ></InputBase>
+      <div className="search-dropdown">
+        <div className="search-scroll">
+          <ul className="search-list">
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+            <li className="search-item">Nirh</li>
+          </ul>
+        </div>
+      </div>
     </form>
   );
 };

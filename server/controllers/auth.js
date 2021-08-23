@@ -31,7 +31,7 @@ const signInController = async (req, res) => {
 };
 
 const signUpController = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, avatar } = req.body;
 
   try {
     const existsUser = await User.findOne({ email });
@@ -46,6 +46,7 @@ const signUpController = async (req, res) => {
       name,
       email,
       password: hashPassword,
+      avatar,
     });
 
     const token = jwt.sign(

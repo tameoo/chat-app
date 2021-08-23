@@ -6,9 +6,9 @@ import { MainPage } from "./pages/MainPage";
 import { SignIn, SignUp } from "./pages/AuthPages";
 
 const App = () => {
-  const userID = useSelector((state) => state.userAuth.userID);
+  const token = useSelector((state) => state.userAuth.token);
 
-  if (userID) {
+  if (token) {
     return (
       <Switch>
         <Route path="/main" exact>

@@ -23,33 +23,6 @@
   visibility: visible;
 }
 
-.sidebar-item {
-  margin: 10px !important;
-}
-
-.sidebar-item:hover {
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.avatar {
-  margin-right: 10px;
-}
-
-.item-inner {
-  width: 100%;
-}
-
-.item-inner > span {
-  font-size: 15px;
-  color: #6a6a6a;
-}
-
-.item-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.item-title span {
-  font-size: 12px;
+.sidebar-list .item-title {
+  color: #333;
 }

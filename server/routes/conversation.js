@@ -14,7 +14,7 @@ conversationRoutes.post(
 );
 
 conversationRoutes.get(
-  "/retrieve-conversation/:userID",
+  "/retrieve-conversation",
   verifyToken,
   retrieveConversation
 );

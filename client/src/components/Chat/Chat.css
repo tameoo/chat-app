@@ -24,7 +24,7 @@
   flex: 1 1;
   overflow: scroll;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: overlay;
   padding: 10px 15px;
 }
 
@@ -142,6 +142,7 @@
 
 .left-message p,
 .right-message p {
+  color: #333;
   word-break: break-word;
   line-height: 1.3125;
 }

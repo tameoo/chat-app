@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { setUserID } from "../../redux";
+import { setToken } from "../../redux";
 import { useDispatch } from "react-redux";
 
 import { TextField, Button } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
+import { fetchUserSignUp } from "../../api";
+
+import { Spinner } from "../../components/Spinner";
 import { isEmail } from "validator";
-import { Spinner } from "../../components/Spinner/Spinner";
 import "./AuthPage.css";
 
 const SignUp = () => {
@@ -17,44 +19,36 @@ const SignUp = () => {
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [avatarError, setAvatarError] = useState(true);
 
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, password } = e.target;
+    const { name, email, password, avatar } = e.target;
 
     const authData = {
       name: name.value,
       email: email.value,
       password: password.value,
+      avatar: avatar.value,
     };
 
-    if (!nameError && !emailError && !passwordError) {
+    if (!nameError && !emailError && !passwordError && !avatarError) {
       setLoading(true);
 
-      fetch("http://localhost:8000/user/sign-up", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(authData),
-      })
-        .then((data) => data.json())
+      fetchUserSignUp(authData)
         .then((response) => {
           setLoading(false);
 
           if (response.token) {
             localStorage.setItem("user", response.token);
-            dispatch(setUserID(response.result._id));
-          }
-
-          if (response.message) {
-            setResponseError(response.message);
+            dispatch(setToken(response.token));
           }
         })
         .catch((err) => {
+          setResponseError(err.message);
           setLoading(false);
         });
     }
@@ -74,6 +68,9 @@ const SignUp = () => {
       case "password":
         value.length < 8 ? setPasswordError(true) : setPasswordError(false);
         break;
+      case "avatar":
+        value === "" ? setAvatarError(true) : setAvatarError(false);
+        break;
       default:
         return;
     }
@@ -82,8 +79,146 @@ const SignUp = () => {
   return (
     <div className="container">
       <form className="form" autoComplete="off" onSubmit={handleSubmit}>
+        <div className="radio-wrapper">
+          <h3 className="radio-text mb-form">Avatar</h3>
+          <div className="radio-group">
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/knight.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/knight.png"
+                alt="knight"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/astronaut.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/astronaut.png"
+                alt="astronaut"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/ghost.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/ghost.png"
+                alt="ghost"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/pharaoh.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/pharaoh.png"
+                alt="pharaoh"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/pumpkin.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/pumpkin.png"
+                alt="pumpkin"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/skeleton.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/skeleton.png"
+                alt="skeleton"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/werewolf.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/werewolf.png"
+                alt="werewolf"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/wizard.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/wizard.png"
+                alt="wizard"
+              />
+            </label>
+            <label className="avatars">
+              <input
+                className="radio-btn"
+                type="radio"
+                name="avatar"
+                onChange={handleChange}
+                value="./avatars/yurei.png"
+              />
+              <img
+                className="avatar-icon"
+                src="./avatars/yurei.png"
+                alt="yurei"
+              />
+            </label>
+          </div>
+          {avatarError ? (
+            <p className="error">Please select your option above</p>
+          ) : (
+            <p className="radio-text">
+              Option is chosen but you can select another one.
+            </p>
+          )}
+        </div>
         <TextField
-          className="mb-form"
+          className="mb-form input-controll"
           name="name"
           type="text"
           label="Your name"
@@ -95,7 +230,7 @@ const SignUp = () => {
           required
         />
         <TextField
-          className="mb-form"
+          className="mb-form input-controll"
           name="email"
           type="email"
           label="Email"
@@ -107,7 +242,7 @@ const SignUp = () => {
           required
         />
         <TextField
-          className="mb-form"
+          className="mb-form input-controll"
           name="password"
           type="password"
           label="Password"
@@ -119,13 +254,17 @@ const SignUp = () => {
           required
         />
         {isResponseError && (
-          <Alert className="mb-form" variant="filled" severity="error">
+          <Alert
+            className="mb-form input-controll"
+            variant="filled"
+            severity="error"
+          >
             {isResponseError}
           </Alert>
         )}
         <Button
           disabled={isLoading}
-          className={`${isLoading ? "" : "btn"} mb-form`}
+          className={`${isLoading ? "" : "btn"} mb-form input-controll`}
           type="submit"
           variant="contained"
         >

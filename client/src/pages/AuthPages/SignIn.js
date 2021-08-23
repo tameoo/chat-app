@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { setUserID } from "../../redux";
+import { setToken } from "../../redux";
 import { useDispatch } from "react-redux";
 
 import { TextField, Button } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
+import { fetchUserSignIn } from "../../api";
+
 import { isEmail } from "validator";
-import { Spinner } from "../../components/Spinner/Spinner";
+import { Spinner } from "../../components/Spinner";
 import "./AuthPage.css";
 
 const SignIn = () => {
@@ -32,27 +34,17 @@ const SignIn = () => {
     if (!emailError && !passwordError) {
       setLoading(true);
 
-      fetch("http://localhost:8000/user/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(authData),
-      })
-        .then((data) => data.json())
+      fetchUserSignIn(authData)
         .then((response) => {
           setLoading(false);
 
           if (response.token) {
             localStorage.setItem("user", response.token);
-            dispatch(setUserID(response.result._id));
-          }
-
-          if (response.message) {
-            setResponseError(response.message);
+            dispatch(setToken(response.token));
           }
         })
         .catch((err) => {
+          setResponseError(err.message);
           setLoading(false);
         });
     }
@@ -78,7 +70,7 @@ const SignIn = () => {
     <div className="container">
       <form className="form" autoComplete="off" onSubmit={handleSubmit}>
         <TextField
-          className="mb-form"
+          className="mb-form  input-controll"
           name="email"
           type="email"
           label="Email"
@@ -90,7 +82,7 @@ const SignIn = () => {
           required
         />
         <TextField
-          className="mb-form"
+          className="mb-form  input-controll"
           name="password"
           type="password"
           label="Password"
@@ -102,13 +94,17 @@ const SignIn = () => {
           required
         />
         {isResponseError && (
-          <Alert className="mb-form" variant="filled" severity="error">
+          <Alert
+            className="mb-form input-controll"
+            variant="filled"
+            severity="error"
+          >
             {isResponseError}
           </Alert>
         )}
         <Button
           disabled={isLoading}
-          className={`${isLoading ? "" : "btn"} mb-form`}
+          className={`${isLoading ? "" : "btn"} mb-form input-controll`}
           type="submit"
           variant="contained"
         >

@@ -3,9 +3,9 @@ import React from "react";
 import { IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import "./Menu.css";
+import "./MenuHeader.css";
 
-const Menu = () => {
+const MenuHeader = () => {
   return (
     <div className="menu">
       <IconButton edge="start" color="inherit" aria-label="open drawer">
@@ -15,4 +15,4 @@ const Menu = () => {
   );
 };
 
-export { Menu };
+export { MenuHeader };

@@ -1,33 +1,83 @@
 .container {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
 }
 
 .form {
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn {
-    background-color: #3c52b3 !important;
-    color: #fff !important;
+  background-color: #3c52b3 !important;
+  color: #fff !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 .center {
-    text-align: center !important;
+  text-align: center !important;
+}
+
+.input-controll {
+  width: 380px !important;
+  margin: 0 auto !important;
 }
 
 .mb-form {
-    margin-bottom: 8px !important;
+  margin-bottom: 8px !important;
 }
 
 .link {
-    text-decoration: none;
-    color: #3c52b3;
+  text-decoration: none;
+  color: #3c52b3;
 }
 
-.link:hover{
-    text-decoration: underline;
+.link:hover {
+  text-decoration: underline;
+}
+
+.radio-wrapper {
+  margin-bottom: 15px;
+}
+
+.radio-group {
+  display: flex;
+}
+
+.avatars {
+  margin: 0 5px;
+}
+
+.avatars > .radio-btn {
+  display: none;
+}
+
+.avatar-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+  object-fit: cover;
+  transition: 0.2s all;
+}
+
+.radio-btn + .avatar-icon {
+  cursor: pointer;
+  border: 2px solid rgb(221, 96, 96);
+}
+
+.radio-btn:checked + .avatar-icon {
+  border: 5px solid #3c52b3;
+}
+
+.radio-text {
+  color: #3c52b3;
+  text-align: center;
+}
+
+.error {
+  color: #f44336 !important;
+  text-align: center !important;
 }

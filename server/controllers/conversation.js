@@ -7,18 +7,18 @@ const createConversation = async (req, res) => {
     });
     res.status(200).json(newConversation);
   } catch (err) {
-    res.status(500).json({ message: "Internal server error try later" });
+    res.status(500).json({ message: "Internal server error try again later" });
   }
 };
 
 const retrieveConversation = async (req, res) => {
   try {
     const oldConversations = await Conversation.find({
-      members: { $in: [req.params.userID] },
+      members: { $in: [req.authData.id] },
     });
     res.status(200).json(oldConversations);
   } catch (err) {
-    res.status(500).json({ message: "Internal server error try later" });
+    res.status(500).json({ message: "Internal server error try again later" });
   }
 };
 
